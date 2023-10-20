@@ -1,0 +1,13 @@
+package icu.sincos.ZhiWeiXiaoYuan_Extra.ui.home
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+
+class HomeViewModel : ViewModel() {
+
+    private val _text = MutableLiveData<String>().apply {
+        value = "测试用"
+    }
+    val text: LiveData<String> = _text
+}
