@@ -68,8 +68,6 @@ class DashboardFragment : Fragment(), MemberFlowAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(item: memberFlowBean.Data){
-        // 在这里执行打开新 Activity 的操作，可以使用 Intent
-        // 示例：打开新的 DetailsActivity，并传递数据项
         val intent = Intent(this.context, JsonActivity::class.java)
         intent.putExtra("amount", item.amount)
         Log.i("DashBroadFragment", "JsonLaunch!!")

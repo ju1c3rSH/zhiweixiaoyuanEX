@@ -24,14 +24,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="405dp"
-        android:layout_height="663dp"
+        android:layout_width="361dp"
+        android:layout_height="573dp"
         android:layout_marginTop="52dp"
         app:layout_constraintBottom_toTopOf="@+id/alphaTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.16"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.042" />
 
     <TextView
         android:id="@+id/alphaTextView"
