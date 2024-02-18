@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import icu.sincos.ZhiWeiXiaoYuan_Extra.TextUtils.toast
 import icu.sincos.ZhiWeiXiaoYuan_Extra.bean.Student
 import icu.sincos.ZhiWeiXiaoYuan_Extra.bean.balanceBean
 
@@ -25,7 +26,6 @@ import icu.sincos.ZhiWeiXiaoYuan_Extra.util.AppConstants.copyPersonCode
 import icu.sincos.ZhiWeiXiaoYuan_Extra.util.CiperTextUtil
 import icu.sincos.ZhiWeiXiaoYuan_Extra.util.DateUtils
 import icu.sincos.ZhiWeiXiaoYuan_Extra.util.OkHttpUtils
-import icu.sincos.ZhiWeiXiaoYuan_Extra.util.ToastUtils
 import org.json.JSONObject
 import java.net.URLEncoder
 import java.util.concurrent.Executors
@@ -104,6 +104,11 @@ class DataService : Service() {
                         )
                     }
                     resultGetRole = OkHttpUtils.get(getRoleNoAuthUrlEncoded, headerMap).toString()
+                    if(resultGetRole!!.contains("unavailable")){
+                        "Server Error".toast()
+                        Log.e("Login", "Server Error")
+                        break
+                    }
                     resultLogin =
                         OkHttpUtils.postJson(AppConstants.loginUrl, AppConstants.jsonStr, headerMap).toString()
                     resultKid = OkHttpUtils.get(AppConstants.getAllStudentsOfParentUrl, headerMap).toString()
@@ -113,29 +118,29 @@ class DataService : Service() {
                     resultQuery = OkHttpUtils.postJson(AppConstants.queryUrl, QueryJsonPostJson, headerMap)
                     break // 如果成功，跳出重试循环
                 } catch (e: Exception) {
-                    ToastUtils.showToastOnUiThread(applicationContext, "网络连接失败，请检查网络")
-                    Log.e("HomeFragment", "getSomeInfo" + e.message)
+                    "网络连接失败，请检查网络".toast()
+                    Log.e("DataService", "getSomeInfo" + e.message)
                     retryCount++
                     if (retryCount < MAX_RETRY_COUNT) {
                         try {
                             Thread.sleep(RETRY_DELAY_MS)
                         } catch (ex: InterruptedException) {
-                            Log.e("HomeFragment", "Thread interrupted: ${ex.message}")
+                            Log.e("DataService", "Thread interrupted: ${ex.message}")
                             break
                         }
                     } else {
-                        ToastUtils.showToastOnUiThread(applicationContext, "网络连接失败，请检查网络")
+                        "网络连接失败，请检查网络".toast()
                         break
                     }
                 }
             }
+            Log.i("DataService", "GetRoleInfo: $resultGetRole")
+            Log.i("DataService", "LoginInfo: $resultLogin")
 
-            Log.i("HomeFragment", "LoginInfo: $resultLogin")
-            Log.i("HomeFragment", "GetRoleInfo: $resultGetRole")
-            Log.i("HomeFragment", "KidInfo: $resultKid")
-            Log.i("HomeFragment", "BalanceInfo: $resultBalance")
-            Log.i("HomeFragment", "MemberFlowInfo: $resultMemberFlow")
-            Log.i("HomeFragment", "QueryInfo: $resultQuery")
+            Log.i("DataService", "KidInfo: $resultKid")
+            Log.i("DataService", "BalanceInfo: $resultBalance")
+            Log.i("DataService", "MemberFlowInfo: $resultMemberFlow")
+            Log.i("DataService", "QueryInfo: $resultQuery")
 
             if (resultGetRole != null) {
 
@@ -179,7 +184,7 @@ class DataService : Service() {
                     //studentNameTV.text = studentName.toString()
                // }
             } else {
-                ToastUtils.showToastOnUiThread(applicationContext, "网络连接失败，请检查网络")
+                "网络连接失败，请检查网络".toast()
             }
         }
     }

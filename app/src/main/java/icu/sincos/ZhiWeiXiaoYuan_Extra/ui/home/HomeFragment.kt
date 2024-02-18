@@ -24,63 +24,33 @@ import icu.sincos.ZhiWeiXiaoYuan_Extra.widget.ZeroLineLayout
 
 class HomeFragment : Fragment() {
     private val MUsrDataModel by viewModels<UsrDataModel>()
-    private lateinit var viewModel: UsrDataModel
-
-
     private var _binding: FragmentHomeBinding? = null
-
-    //var be : balanceBean? = null
-
     private val binding get() = _binding!!
-
-
-
-
 
     @SuppressLint("ResourceType", "UnspecifiedRegisterReceiverFlag")
     override fun onCreateView(
-
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        /*
-        val filter = IntentFilter("icu.sincos.zhiweixiaoyuan_rebuild.service.DataService")
-        requireActivity().registerReceiver(receiver, filter)
-        */
-
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        val cbTV : TextView = root.findViewById(R.id.card_balance_textview)
-        //val bTV : TextView = root.findViewById(R.id.balance_textView)
-
-        //val nTV : TextView = root.findViewById(R.id.name_textView)
-        val zeroLineLayout = root.findViewById<ZeroLineLayout>(R.layout.item_balance)
-        //bTV.setText("Now Loading")
+        val cbTV: TextView = root.findViewById(R.id.card_balance_textview)
 
         val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
         val CardBalance = root.findViewById<TextView>(R.id.card_balance_textview)
         val CardName = root.findViewById<TextView>(R.id.card_name_textview)
         val cCount = root.findViewById<TextView>(R.id.card_cCount_textview)
         val cardNumberTV = root.findViewById<TextView>(R.id.card_cardNumber_textview)
-        //val viewModel = ViewModelProvider(this).get(UsrDataModel::class.java)
 
-
-        MUsrDataModel.userData.observe(this.viewLifecycleOwner){
-                Log.d("HF", it.toString())
+        MUsrDataModel._userData.observe(viewLifecycleOwner) {
+            Log.d("HF", it.studentName)
         }
 
-        Log.d("HF", "2")
-
-
-
         return root
+
+
+        //Log.d("HF", "2")
     }
 
     /*
