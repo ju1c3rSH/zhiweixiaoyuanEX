@@ -17,6 +17,7 @@ import icu.sincos.ZhiWeiXiaoYuan_Extra.MyViewModel
 import icu.sincos.ZhiWeiXiaoYuan_Extra.adapter.MemberFlowAdapter
 import icu.sincos.ZhiWeiXiaoYuan_Extra.bean.memberFlowBean
 import icu.sincos.ZhiWeiXiaoYuan_Extra.databinding.FragmentDashboardBinding
+import icu.sincos.ZhiWeiXiaoYuan_Extra.model.UsrDataModel
 import icu.sincos.ZhiWeiXiaoYuan_Extra.ui.JsonActivity
 
 class DashboardFragment : Fragment(), MemberFlowAdapter.OnItemClickListener {
@@ -43,14 +44,27 @@ class DashboardFragment : Fragment(), MemberFlowAdapter.OnItemClickListener {
         val root: View = binding.root
         val recyclerView: RecyclerView = binding.recyclerView
         val viewModel = ViewModelProvider(requireActivity()).get(MyViewModel::class.java)
-        var adper: List<memberFlowBean.Data> = gson.fromJson(viewModel.json.toString(), memberFlowBean::class.java).datas
-        Log.i("DashBroadFragment", viewModel.json.toString())
-        //Log.i("DashBroadFragment", memberFlowBean::)
+        Log.i("DashBroadFragments", UsrDataModel()._userData.value?.resultMemberFlow.toString())
+        try{
+            var adper: List<memberFlowBean.Data> = gson.fromJson(UsrDataModel().userData.value?.resultMemberFlow.toString(), memberFlowBean::class.java).datas
+            Log.i("DashBroadFragment", viewModel.json.toString())
+            //Log.i("DashBroadFragment", memberFlowBean::)
 
-        val adapter = this.context?.let { MemberFlowAdapter(adper, it) }
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.setLayoutManager(recyclerView.layoutManager);
-        recyclerView.adapter = adapter
+            val adapter = this.context?.let { MemberFlowAdapter(adper, it) }
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.setLayoutManager(recyclerView.layoutManager);
+            recyclerView.adapter = adapter
+        }catch (e:Exception){
+            Log.e("DashBroadFragment", e.toString())
+        }
+//        var adper: List<memberFlowBean.Data> = gson.fromJson(UsrDataModel().userData.value?.resultMemberFlow.toString(), memberFlowBean::class.java).datas
+//        Log.i("DashBroadFragment", viewModel.json.toString())
+//        //Log.i("DashBroadFragment", memberFlowBean::)
+//
+//        val adapter = this.context?.let { MemberFlowAdapter(adper, it) }
+//        recyclerView.layoutManager = LinearLayoutManager(context)
+//        recyclerView.setLayoutManager(recyclerView.layoutManager);
+//        recyclerView.adapter = adapter
 
 
         val textView: TextView = binding.textDashboard

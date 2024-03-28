@@ -152,14 +152,14 @@ class DataService : Service() {
                     gson.fromJson(resultMemberFlow, memberFlowBean::class.java).total.toString()
                 var _cardNumber: String =
                     gson.fromJson(resultMemberFlow, memberFlowBean::class.java).datas[0].cardNumber.toString()
-                /*
+
                     sendData2Activity(balance.toString()
                         , studentName.toString()
                         , consumptionCount.toString()
                         , _cardNumber.toString()
                         , resultMemberFlow.toString()
                     )
-                    */
+
                 val jsonData = JSONObject().apply {
                     put("balance", balance)
                     put("studentName", studentName)
@@ -170,7 +170,7 @@ class DataService : Service() {
                 val jsonDataString = jsonData.toString()
                 Log.i("DataService", "jsonDataString: $jsonDataString")
                 UsrDataModel().setUserData(jsonDataString)
-                MuserData.postValue(jsonData.toString())
+                MuserData.postValue(jsonDataString)
                 Log.i("DataService", "balance: $balance")
                 //uiHandler.post {
                     //val balanceTextView = binding.balanceTextView
